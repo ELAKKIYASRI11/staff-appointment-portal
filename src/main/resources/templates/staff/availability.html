@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Availability</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <div class="topbar">
+            <div>
+                <div style="font-weight:700; font-size:20px;">🧑‍🏫 Faculty Dashboard</div>
+                <div class="subtitle" style="margin:2px 0 0;">Manage your availability and appointments</div>
+            </div>
+            <a class="btn btn-outline btn-small" th:href="@{/logout}">Logout</a>
+        </div>
+
+        <div class="tabs">
+            <a class="tab" th:href="@{/staff/dashboard}">Appointment Requests</a>
+            <span class="tab active">My Availability</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-label">Set Your Availability</div>
+        <form th:action="@{/staff/availability/add}" method="post">
+            <label>Day</label>
+            <select name="dayOfWeek" required>
+                <option value="">Select day</option>
+                <option value="MONDAY">Monday</option>
+                <option value="TUESDAY">Tuesday</option>
+                <option value="WEDNESDAY">Wednesday</option>
+                <option value="THURSDAY">Thursday</option>
+                <option value="FRIDAY">Friday</option>
+            </select>
+
+            <label>Time Slot</label>
+            <input type="time" name="timeSlot" required>
+
+            <button type="submit" class="btn btn-green">Add Availability</button>
+        </form>
+    </div>
+
+    <div class="card" th:if="${!#lists.isEmpty(slots)}">
+        <div class="section-label">Your Slots</div>
+        <div th:each="slot : ${slots}" class="staff-card">
+            <span th:text="${slot.dayOfWeek} + ' — ' + ${slot.timeSlot}">MONDAY — 14:00</span>
+            <span th:text="${slot.booked} ? 'Booked' : 'Open'" th:classappend="${slot.booked} ? 'badge badge-accepted' : 'badge badge-pending'"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

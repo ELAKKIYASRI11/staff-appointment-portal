@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <div class="topbar">
+            <div>
+                <div style="font-weight:700; font-size:20px;">🎓 Student Dashboard</div>
+                <div class="subtitle" style="margin:2px 0 0;">Book and manage your appointments</div>
+            </div>
+            <a class="btn btn-outline btn-small" th:href="@{/logout}">Logout</a>
+        </div>
+
+        <div class="tabs">
+            <span class="tab active">Browse Faculty</span>
+            <a class="tab" th:href="@{/student/appointments}">My Appointments</a>
+        </div>
+
+        <!-- Search feature: filters staff by name or department -->
+        <form class="search-bar" th:action="@{/student/dashboard}" method="get">
+            <input type="text" name="q" th:value="${query}" placeholder="Search by name or department...">
+            <button type="submit" class="btn btn-small" style="width:auto;">Search</button>
+        </form>
+    </div>
+
+    <div class="card" th:each="staff : ${staffList}">
+        <div style="display:flex; justify-content:space-between;">
+            <div>
+                <div class="role-title" th:text="${staff.name}">Dr. Sarah Johnson</div>
+                <div class="role-sub" th:text="${staff.department != null ? staff.department.name : ''}">Computer Science</div>
+            </div>
+            <span>🧑‍🏫</span>
+        </div>
+
+        <div th:with="slots=${availabilityService.getOpenSlotsForStaff(staff)}">
+            <div th:if="${#lists.isEmpty(slots)}" class="role-sub" style="margin:14px 0;">No open slots right now</div>
+
+            <form th:unless="${#lists.isEmpty(slots)}" th:action="@{/student/book}" method="post" style="margin-top:14px;">
+                <input type="hidden" name="staffId" th:value="${staff.id}">
+
+                <label>Available</label>
+                <select name="availabilityId" required>
+                    <option th:each="slot : ${slots}"
+                            th:value="${slot.id}"
+                            th:text="${slot.dayOfWeek} + ' ' + ${slot.timeSlot}">Mon 14:00</option>
+                </select>
+
+                <label>Purpose</label>
+                <input type="text" name="purpose" placeholder="e.g. Thesis discussion" required>
+
+                <button type="submit" class="btn">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card center" th:if="${#lists.isEmpty(staffList)}">
+        <p class="subtitle">No staff match your search.</p>
+    </div>
+</div>
+</body>
+</html>

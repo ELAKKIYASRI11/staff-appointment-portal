@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Hub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card center">
+        <div style="font-size:32px;">📚</div>
+        <h1>Appointment Hub</h1>
+        <p class="subtitle">Schedule meetings with ease</p>
+    </div>
+
+    <div class="card">
+        <div class="section-label">Select Your Role</div>
+
+        <a class="role-option" th:href="@{/login/student}">
+            <div>
+                <span class="role-emoji">🎓</span>
+                <div style="display:inline-block; vertical-align:middle;">
+                    <div class="role-title">Student</div>
+                    <div class="role-sub">Book appointments</div>
+                </div>
+            </div>
+        </a>
+
+        <a class="role-option" th:href="@{/login/staff}">
+            <div>
+                <span class="role-emoji">🧑‍🏫</span>
+                <div style="display:inline-block; vertical-align:middle;">
+                    <div class="role-title">Staff/Faculty</div>
+                    <div class="role-sub">Manage appointments</div>
+                </div>
+            </div>
+        </a>
+
+        <a class="role-option" th:href="@{/login/admin}">
+            <div>
+                <span class="role-emoji">⚙️</span>
+                <div style="display:inline-block; vertical-align:middle;">
+                    <div class="role-title">Administrator</div>
+                    <div class="role-sub">System overview</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

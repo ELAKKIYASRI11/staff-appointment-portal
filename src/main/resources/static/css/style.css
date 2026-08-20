@@ -1,0 +1,84 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #eef1f8;
+    color: #1e1e2d;
+    min-height: 100vh;
+}
+.page-wrap { max-width: 640px; margin: 0 auto; padding: 32px 16px; }
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 24px rgba(30,30,45,0.06);
+    margin-bottom: 16px;
+}
+.center { text-align: center; }
+h1 { font-size: 26px; }
+.subtitle { color: #8a8fa3; margin-top: 6px; margin-bottom: 20px; }
+.section-label { font-weight: 600; margin-bottom: 12px; }
+
+.role-option, .staff-card, .appt-card, .flag-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ececf3;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+.role-option:hover, .staff-card:hover { background: #f8f9fd; }
+.role-emoji { font-size: 22px; margin-right: 12px; }
+.role-title { font-weight: 600; }
+.role-sub { color: #8a8fa3; font-size: 14px; }
+
+.btn {
+    display: inline-block;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+.btn-green { background: #16a34a; }
+.btn-outline { background: #fff; color: #1e1e2d; border: 1px solid #d8dae3; }
+.btn-small { width: auto; padding: 8px 14px; font-size: 13px; }
+
+.tabs { display: flex; background: #eef0f6; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+.tab { flex: 1; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; color: #6b7086; font-weight: 600; }
+.tab.active { background: #fff; color: #1e1e2d; }
+
+.badge { padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+.badge-pending { background: #fef3c7; color: #92400e; }
+.badge-accepted { background: #dcfce7; color: #166534; }
+.badge-rejected { background: #fee2e2; color: #991b1b; }
+.badge-completed { background: #e0e7ff; color: #3730a3; }
+.badge-expired { background: #f1f5f9; color: #64748b; }
+
+.stat-card { text-align: center; padding: 24px; }
+.stat-emoji { font-size: 28px; }
+.stat-num { font-size: 26px; font-weight: 700; margin: 6px 0 2px; }
+.stat-label { color: #8a8fa3; }
+
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d8dae3;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+label { font-size: 13px; color: #4b4f5e; font-weight: 600; display: block; margin-bottom: 6px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.error { color: #b91c1c; margin-bottom: 12px; font-size: 14px; }
+.search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.search-bar input { margin-bottom: 0; }
+.flagged { border-left: 4px solid #fb923c; background: #fff7ed; }
