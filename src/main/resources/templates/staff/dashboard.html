@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <div class="topbar">
+            <div>
+                <div style="font-weight:700; font-size:22px;">🧑‍🏫 Faculty Dashboard</div>
+                <div class="subtitle" style="margin:2px 0 0;" th:text="'Logged in as ' + ${staffName}">Faculty</div>
+            </div>
+            <a class="btn btn-outline btn-small" th:href="@{/logout}">Logout</a>
+        </div>
+
+        <div class="tabs">
+            <span class="tab active">Appointment Requests</span>
+            <a class="tab" th:href="@{/staff/availability}">My Availability</a>
+        </div>
+
+        <!-- Success Alert -->
+        <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+    </div>
+
+    <!-- Appointment Requests List -->
+    <div class="card appt-card"
+         th:each="appt : ${appointments}"
+         th:classappend="${appt.flagged} ? ' flagged' : ''"
+         style="display:block;"
+         th:style="${appt.status.name() == 'PENDING'} ? 'display:block; border-left:4px solid #f59e0b;' : (${appt.status.name() == 'ACCEPTED'} ? 'display:block; border-left:4px solid #16a34a;' : (${appt.status.name() == 'COMPLETED'} ? 'display:block; border-left:4px solid #2563eb;' : 'display:block; border-left:4px solid #cbd5e1;'))">
+
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+                <span class="role-title" style="font-size:16px;" th:text="${appt.student.name}">John Smith</span>
+                <span class="badge"
+                      th:classappend="${'badge-' + #strings.toLowerCase(appt.status)}"
+                      th:text="${appt.status}">PENDING</span>
+                <span class="badge" th:if="${appt.flagged}" style="background:#fed7aa; color:#9a3412;">⚠️ FLAGGED (48HR)</span>
+                <div class="role-sub" th:if="${appt.student.rollNumber != null}" th:text="'Roll No: ' + ${appt.student.rollNumber}">Roll No: CS101</div>
+            </div>
+            <div style="text-align:right;">
+                <div class="role-sub" th:if="${appt.availability != null}" th:text="${appt.availability.dayOfWeek} + ' ' + ${appt.availability.timeSlot}">MONDAY 14:00</div>
+                <div class="role-sub" th:text="${#temporals.format(appt.createdAt, 'yyyy-MM-dd HH:mm')}">2026-09-09 11:30</div>
+            </div>
+        </div>
+
+        <div style="margin-top:10px;">
+            <div style="font-size:14px;"><strong>Purpose:</strong> <span th:text="${appt.purpose}">Project Discussion</span></div>
+            <div th:if="${appt.remarks != null and !appt.remarks.isEmpty()}" style="font-size:13px; color:#475569; margin-top:4px;">
+                <strong>Remarks Added:</strong> <span th:text="${appt.remarks}">Discussed</span>
+            </div>
+            <div th:if="${appt.rating != null}" style="font-size:13px; color:#d97706; margin-top:4px;">
+                <strong>Student Rating:</strong> <span th:text="${appt.rating} + ' ★'">5 ★</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f3f8; display:flex; gap:8px; justify-content:flex-end;">
+            <!-- PENDING: Accept or Decline -->
+            <form th:if="${appt.status.name() == 'PENDING'}" th:action="@{'/staff/appointments/' + ${appt.id} + '/accept'}" method="post" style="margin:0;">
+                <button type="submit" class="btn btn-green btn-small">Accept</button>
+            </form>
+            <form th:if="${appt.status.name() == 'PENDING'}" th:action="@{'/staff/appointments/' + ${appt.id} + '/decline'}" method="post" style="margin:0;">
+                <button type="submit" class="btn btn-outline btn-small" style="color:#dc2626; border-color:#fca5a5;">Decline</button>
+            </form>
+
+            <!-- ACCEPTED: Complete with Remarks -->
+            <form th:if="${appt.status.name() == 'ACCEPTED'}" th:action="@{'/staff/appointments/' + ${appt.id} + '/complete'}" method="post" style="display:flex; gap:8px; width:100%; margin:0;">
+                <input type="text" name="remarks" placeholder="Enter session notes / remarks (optional)" style="margin:0; flex:1;">
+                <button type="submit" class="btn btn-small">Mark Complete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card center" th:if="${#lists.isEmpty(appointments)}">
+        <p class="subtitle" style="margin-bottom:0;">No appointment requests received yet.</p>
+    </div>
+</div>
+</body>
+</html>

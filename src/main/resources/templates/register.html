@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${#strings.capitalize(role)} + ' Registration'">Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <h1 th:text="${#strings.capitalize(role)} + ' Registration'">Create Account</h1>
+        <p class="subtitle" th:text="'Sign up as a ' + ${role}">Register to get started</p>
+
+        <!-- Error Alert -->
+        <div class="alert alert-error" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{'/register/' + ${role}}" method="post">
+            <label>Full Name</label>
+            <input type="text" name="name" th:value="${name}" placeholder="Enter your full name" required autofocus>
+
+            <label>Email Address</label>
+            <input type="email" name="email" th:value="${email}" placeholder="e.g. name@college.edu" required>
+
+            <!-- Student-specific fields -->
+            <div th:if="${role == 'student'}">
+                <label>Roll Number / Student ID</label>
+                <input type="text" name="rollNumber" th:value="${rollNumber}" placeholder="e.g. CS101" required>
+            </div>
+
+            <!-- Staff-specific fields -->
+            <div th:if="${role == 'staff'}">
+                <label>Department</label>
+                <select name="departmentId" required>
+                    <option value="">Select Department</option>
+                    <option th:each="dept : ${departments}"
+                            th:value="${dept.id}"
+                            th:text="${dept.name}"
+                            th:selected="${dept.id == selectedDepartmentId}">Computer Science</option>
+                </select>
+            </div>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Choose a password" required>
+
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
+
+            <button type="submit" class="btn btn-block">Register Account</button>
+        </form>
+
+        <div class="auth-links">
+            <a th:href="@{'/login/' + ${role}}">Already have an account? Sign In</a>
+            <a th:href="@{/}">← Back to Roles</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

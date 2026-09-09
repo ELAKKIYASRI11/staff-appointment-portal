@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <div class="topbar">
+            <div>
+                <div style="font-weight:700; font-size:22px;">🎓 Student Dashboard</div>
+                <div class="subtitle" style="margin:2px 0 0;" th:text="'Welcome, ' + ${studentName}">Welcome</div>
+            </div>
+            <a class="btn btn-outline btn-small" th:href="@{/logout}">Logout</a>
+        </div>
+
+        <div class="tabs">
+            <span class="tab active">Browse Faculty</span>
+            <a class="tab" th:href="@{/student/appointments}">My Appointments</a>
+        </div>
+
+        <!-- Search feature: filters staff by name or department -->
+        <form class="search-bar" th:action="@{/student/dashboard}" method="get">
+            <input type="text" name="q" th:value="${query}" placeholder="Search faculty by name or department...">
+            <button type="submit" class="btn btn-small">Search</button>
+            <a th:if="${query != null and !query.isEmpty()}" th:href="@{/student/dashboard}" class="btn btn-outline btn-small" style="text-decoration:none;">Clear</a>
+        </form>
+    </div>
+
+    <!-- Faculty Cards -->
+    <div class="card" th:each="staff : ${staffList}">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="role-title" style="font-size:17px;" th:text="${staff.name}">Dr. Sarah Johnson</span>
+                    <span class="badge badge-completed" th:text="${staff.avgRating} + ' ★'">4.8 ★</span>
+                </div>
+                <div class="role-sub" th:text="${staff.department != null ? staff.department.name : 'General Department'}">Computer Science</div>
+            </div>
+            <span style="font-size:24px;">🧑‍🏫</span>
+        </div>
+
+        <div th:with="slots=${availabilityService.getOpenSlotsForStaff(staff)}" style="margin-top:14px; border-top:1px solid #f1f3f8; padding-top:14px;">
+            <div th:if="${#lists.isEmpty(slots)}" class="role-sub" style="font-style:italic;">
+                No open availability slots currently scheduled.
+            </div>
+
+            <form th:unless="${#lists.isEmpty(slots)}" th:action="@{/student/book}" method="post">
+                <input type="hidden" name="staffId" th:value="${staff.id}">
+
+                <label>Available Slots</label>
+                <select name="availabilityId" required>
+                    <option th:each="slot : ${slots}"
+                            th:value="${slot.id}"
+                            th:text="${slot.dayOfWeek} + ' — ' + ${slot.timeSlot}">MONDAY — 14:00</option>
+                </select>
+
+                <label>Purpose of Appointment</label>
+                <input type="text" name="purpose" placeholder="e.g. Thesis review, Doubt clarification" required>
+
+                <button type="submit" class="btn btn-block">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card center" th:if="${#lists.isEmpty(staffList)}">
+        <p class="subtitle" style="margin-bottom:0;">No faculty members found matching your search criteria.</p>
+    </div>
+</div>
+</body>
+</html>

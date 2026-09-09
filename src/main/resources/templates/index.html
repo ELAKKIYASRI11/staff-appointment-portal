@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Hub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card center">
+        <div style="font-size:38px; margin-bottom: 8px;">📚</div>
+        <h1>Appointment Hub</h1>
+        <p class="subtitle">Staff Appointment Booking & Management Portal</p>
+    </div>
+
+    <div class="card">
+        <div class="section-label">Select Your Role & Access Option</div>
+
+        <div class="role-card-group">
+            <!-- Student -->
+            <div class="role-box">
+                <div class="role-info">
+                    <span class="role-emoji">🎓</span>
+                    <div>
+                        <div class="role-title">Student</div>
+                        <div class="role-sub">Browse faculty & book appointments</div>
+                    </div>
+                </div>
+                <div class="role-actions">
+                    <a class="btn btn-small" th:href="@{/login/student}">Login</a>
+                    <a class="btn btn-outline btn-small" th:href="@{/register/student}">Register</a>
+                </div>
+            </div>
+
+            <!-- Staff/Faculty -->
+            <div class="role-box">
+                <div class="role-info">
+                    <span class="role-emoji">🧑‍🏫</span>
+                    <div>
+                        <div class="role-title">Staff / Faculty</div>
+                        <div class="role-sub">Manage schedule & appointment requests</div>
+                    </div>
+                </div>
+                <div class="role-actions">
+                    <a class="btn btn-small" th:href="@{/login/staff}">Login</a>
+                    <a class="btn btn-outline btn-small" th:href="@{/register/staff}">Register</a>
+                </div>
+            </div>
+
+            <!-- Admin -->
+            <div class="role-box">
+                <div class="role-info">
+                    <span class="role-emoji">⚙️</span>
+                    <div>
+                        <div class="role-title">Administrator</div>
+                        <div class="role-sub">System stats, ratings & 48hr escalations</div>
+                    </div>
+                </div>
+                <div class="role-actions">
+                    <a class="btn btn-small" th:href="@{/login/admin}">Login</a>
+                    <a class="btn btn-outline btn-small" th:href="@{/register/admin}">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="background:#fafbff;">
+        <div class="section-label" style="font-size:14px; margin-bottom:8px;">🔑 Pre-seeded Demo Accounts</div>
+        <p class="role-sub" style="margin-bottom:12px;">You can test immediately with the default credentials:</p>
+        <div style="font-size:13px; line-height:1.7;">
+            <div><strong>Admin:</strong> <code>admin@college.edu</code> / <code>admin123</code></div>
+            <div><strong>Staff:</strong> <code>sarah.johnson@college.edu</code> / <code>staff123</code></div>
+            <div><strong>Student:</strong> <code>john.smith@college.edu</code> / <code>student123</code></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

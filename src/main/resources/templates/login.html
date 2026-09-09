@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${#strings.capitalize(role)} + ' Login'">Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-wrap">
+    <div class="card">
+        <h1 th:text="${#strings.capitalize(role)} + ' Login'">Login</h1>
+        <p class="subtitle">Sign in to your account</p>
+
+        <!-- Alerts -->
+        <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+        <div class="alert alert-error" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{'/login/' + ${role}}" method="post">
+            <label>Email Address</label>
+            <input type="email" name="email" th:value="${email}" placeholder="e.g. name@college.edu" required autofocus>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit" class="btn btn-block">Sign In</button>
+        </form>
+
+        <div class="auth-links">
+            <a th:href="@{'/register/' + ${role}}">Don't have an account? Register</a>
+            <a th:href="@{/}">← Back to Roles</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
