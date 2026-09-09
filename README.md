@@ -42,8 +42,8 @@ A full-featured appointment scheduling system for higher education institutions,
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/appointment_portal?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
    spring.datasource.username=root
-   spring.datasource.password=velakkiyasri3
-   ```
+spring.datasource.password=your_password_here
+```
 3. The database `appointment_portal` and all tables are auto-created by Hibernate on startup (`spring.jpa.hibernate.ddl-auto=update`).
 4. **Seed Data**:
    - `seed-data.sql` is provided in the project root.
